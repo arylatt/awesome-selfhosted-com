@@ -21,6 +21,7 @@ class CreatePullRequestsTable extends Migration
             $table->integer('pr_mergeable');
             $table->integer('pr_locked')->default(0);
             $table->timestamps();
+            
             $table->primary('pr_id');
         });
     }
