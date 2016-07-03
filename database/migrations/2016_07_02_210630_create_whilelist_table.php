@@ -15,6 +15,7 @@ class CreateWhilelistTable extends Migration
         Schema::create('whitelist', function (Blueprint $table) {
             $table->increments('id');
             $table->string('whilelisted_title');
+            $table->integer('whitelist_user');
             $table->timestamps();
         });
     }
