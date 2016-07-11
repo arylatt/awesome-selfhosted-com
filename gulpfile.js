@@ -13,11 +13,13 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.styles([
-    	'../../../vendor/semantic/ui/dist/semantic.min.css'
+    	'../../../vendor/semantic/ui/dist/semantic.min.css',
+        'common.css'
     ])
     .scripts([
     	'../../../vendor/components/jquery/jquery.min.js',
-    	'../../../vendor/semantic/ui/dist/semantic.min.js'
+    	'../../../vendor/semantic/ui/dist/semantic.min.js',
+        'common.js'
     ])
     .copy('vendor/semantic/ui/dist/themes', 'public/css/themes');
 });

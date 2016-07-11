@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "semantic/ui": "^2.2",
-        "components/jquery": "^3.0"
+        "components/jquery": "^3.0",
+        "cebe/markdown": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

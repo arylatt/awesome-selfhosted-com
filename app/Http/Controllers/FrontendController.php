@@ -55,4 +55,10 @@ class FrontendController extends Controller
     	Auth::logout();
     	return redirect('/');
     }
+
+    public function DisplayMarkdown(Request $req) {
+    	$md = new \cebe\markdown\GithubMarkdown();
+    	$md = $md->parse(file_get_contents("https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md"));
+    	return view('frontend.markdown', ['title' => 'Markdown - Awesome-Selfhosted', 'md' => $md]);
+    }
 }

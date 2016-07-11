@@ -45,4 +45,15 @@ class User extends Authenticatable
     public function Avatar() {
         return 'https://avatars.githubusercontent.com/u/' . $this->user_id;
     }
+
+    public function IsAdmin() {
+        return $this->user_admin;
+    }
+
+    public function IsCollab() {
+        if($this->IsAdmin()) {
+            return true;
+        }
+        return $this->user_collab;
+    }
 }
