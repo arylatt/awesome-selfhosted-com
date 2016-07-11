@@ -2,3 +2,15 @@
 	padding-top: 70px;
 	padding-bottom: 35px;
 }
+
+.right.aligned {
+	text-align: right;
+}
+
+.center.aligned {
+	text-align: center;
+}
+
+.left-aligned {
+	text-align: left;
+}

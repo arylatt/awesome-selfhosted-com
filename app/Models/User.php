@@ -56,4 +56,8 @@ class User extends Authenticatable
         }
         return $this->user_collab;
     }
+
+    public function StaffBio() {
+        return '<em>User has not written a bio.</em>';
+    }
 }

@@ -61,4 +61,9 @@ class FrontendController extends Controller
     	$md = $md->parse(file_get_contents("https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md"));
     	return view('frontend.markdown', ['title' => 'Markdown - Awesome-Selfhosted', 'md' => $md]);
     }
+
+    public function Team(Request $req) {
+    	$collaborators = User::where('user_collab', '=', '1')->orWhere('user_admin', '=', '1')->get();
+    	return view('frontend.team', ['title' => 'Team - Awesome-Selfhosted', 'collabs' => $collaborators]);
+    }
 }
