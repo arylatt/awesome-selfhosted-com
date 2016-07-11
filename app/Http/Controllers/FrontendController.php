@@ -11,10 +11,7 @@ use App\Models\User;
 class FrontendController extends Controller
 {
 	public function Index(Request $req) {
-		if(Auth::check()) {
-			return 'Hello, ' . Auth::user()->user_name . '!';
-		}
-		return 'Hello, Anon! <a href="/login">Login</a>';
+		return view('frontend.index', ['user' => ((Auth::check()) ? Auth::user()->user_name : 'Anon')]);
 	}
 
     public function Login(Request $req) {
@@ -52,5 +49,10 @@ class FrontendController extends Controller
 		} else {
 			return redirect('/');
 		}
+    }
+
+    public function Logout(Request $req) {
+    	Auth::logout();
+    	return redirect('/');
     }
 }
