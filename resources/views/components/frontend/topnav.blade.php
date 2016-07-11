@@ -3,7 +3,41 @@
 		<a href="/" class="header item">
 			Awesome-Selfhosted
 		</a>
+		<div class="ui dropdown item">
+			View List
+			<i class="dropdown icon"></i>
+			<div class="menu">
+				<a href="/view/markdown" class="item">
+					Markdown
+				</a>
+				<a href="/view/yaml" class="item">
+					YAML
+				</a>
+				<a href="/view/json" class="item">
+					JSON
+				</a>
+				<a href="/view/xml" class="item">
+					XML
+				</a>
+			</div>
+		</div>
+		<a href="/submit" class="item">
+			Submit Item
+		</a>
+		<a href="/team" class="item">
+			The Team
+		</a>
+		<a href="https://chat.awesome-selfhosted.com/" class="item">
+			Chat
+		</a>
 		<div class="right menu">
+			<div id="awesh_search" class="ui category search item">
+				<div class="ui transparent icon input">
+					<input class="prompt" placeholder="Find Something..." type="text" />
+					<i class="search link icon"></i>
+				</div>
+				<div class="results"></div>
+			</div>
 			@if(Auth::check())
 				<div class="ui dropdown item">
 					{{ Auth::user()->user_name }}
