@@ -14,7 +14,7 @@
 					</div>
 				</h1>
 				<p>You need to sign in before you can submit requests to this repository. Click the button below to sign in through GitHub.</p>
-				<a href="/login" class="ui white button">
+				<a href="/login?backTo=/submit" class="ui white button">
 					<i class="github icon"></i>
 					Sign In through GitHub
 				</a>
