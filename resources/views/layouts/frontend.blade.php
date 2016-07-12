@@ -14,7 +14,7 @@
 		<div class="page">
 			@yield('content')
 		</div>
-		@unless(isset($notopnav))
+		@unless(isset($nofooter))
 			<footer class="ui fluid attached segment">
 				@include('components.frontend.footer')
 			</footer>

@@ -39,3 +39,11 @@ footer.ui.attached.segment {
 	left: 0;
 	top: auto;
 }
+
+.ui.submit-nologin.grid {
+	margin-top: 25px;
+}
+
+.ui.submit-nologin.grid > .twelve.wide.column {
+	padding-top: 40px;
+}

@@ -14,6 +14,24 @@ class FrontendController extends Controller
 		return view('frontend.index', ['user' => ((Auth::check()) ? Auth::user()->user_name : 'Anon')]);
 	}
 
+    public function DisplayMarkdown(Request $req) {
+    	$md = new \cebe\markdown\GithubMarkdown();
+    	$md = $md->parse(file_get_contents("https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md"));
+    	return view('frontend.markdown', ['title' => 'Markdown - Awesome-Selfhosted', 'md' => $md]);
+    }
+
+    public function Submit(Request $req) {
+    	if(!Auth::check()) {
+    		return view('frontend.nologin', ['title' => 'Hold on a sec... - Awesome-Selfhosted']);
+    	}
+    	return view('frontend.submit', ['title' => 'Submit Item - Awesome-Selfhosted']);
+    }
+
+    public function Team(Request $req) {
+    	$collaborators = User::where('user_collab', '=', '1')->orWhere('user_admin', '=', '1')->get();
+    	return view('frontend.team', ['title' => 'Team - Awesome-Selfhosted', 'collabs' => $collaborators]);
+    }
+
     public function Login(Request $req) {
     	if(!Auth::check()) {
 	    	if(!$req->session()->has('github.state')) {
@@ -54,16 +72,5 @@ class FrontendController extends Controller
     public function Logout(Request $req) {
     	Auth::logout();
     	return redirect('/');
-    }
-
-    public function DisplayMarkdown(Request $req) {
-    	$md = new \cebe\markdown\GithubMarkdown();
-    	$md = $md->parse(file_get_contents("https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md"));
-    	return view('frontend.markdown', ['title' => 'Markdown - Awesome-Selfhosted', 'md' => $md]);
-    }
-
-    public function Team(Request $req) {
-    	$collaborators = User::where('user_collab', '=', '1')->orWhere('user_admin', '=', '1')->get();
-    	return view('frontend.team', ['title' => 'Team - Awesome-Selfhosted', 'collabs' => $collaborators]);
     }
 }
