@@ -9,5 +9,5 @@ $(document).ready(function() {
 		showNoResults: true,
 		maxResults: 10,
 		minCharacters: 3
-	})
+	});
 });

@@ -14,6 +14,11 @@
 		<div class="page">
 			@yield('content')
 		</div>
+		@unless(isset($notopnav))
+			<footer class="ui fluid attached segment">
+				@include('components.frontend.footer')
+			</footer>
+		@endunless
 	</body>
 	<script type="text/javascript" src="/js/all.js"></script>
 </html>
