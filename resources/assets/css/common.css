@@ -1,6 +1,19 @@
+html {
+	box-sizing: border-box;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	padding-bottom: 250px;
+	min-height: 100%;
+	height: auto;
+}
+
 .page {
 	padding-top: 70px;
 	padding-bottom: 35px;
+	margin: 0 auto;
 }
 
 .right.aligned {
@@ -13,4 +26,16 @@
 
 .left-aligned {
 	text-align: left;
+}
+
+footer.ui.attached.segment {
+	height: 250px;
+	border: none;
+	border-top: 1px solid rgba(34,36,38,.15);
+	box-shadow: 0 1px 6px rgba(0,0,0,.2);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	top: auto;
 }
