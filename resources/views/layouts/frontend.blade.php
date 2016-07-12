@@ -3,6 +3,7 @@
 		<title>
 			{{ $title or "Awesome-Selfhosted" }}
 		</title>
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto" />
 		<link rel="stylesheet" type="text/css" href="/css/all.css" />
 	</head>
 
