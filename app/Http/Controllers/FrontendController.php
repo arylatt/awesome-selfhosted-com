@@ -11,25 +11,29 @@ use App\Models\User;
 class FrontendController extends Controller
 {
 	public function Index(Request $req) {
-		return view('frontend.index', ['user' => ((Auth::check()) ? Auth::user()->user_name : 'Anon')]);
+		return view('frontend.index');
+	}
+
+	public function View(Request $req) {
+		return view('frontend.view', ['title' => 'View']);
 	}
 
 	public function DisplayMarkdown(Request $req) {
 		$md = new \cebe\markdown\GithubMarkdown();
 		$md = $md->parse(file_get_contents("https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md"));
-		return view('frontend.markdown', ['title' => 'Markdown - Awesome-Selfhosted', 'md' => $md]);
+		return view('frontend.markdown', ['title' => 'Markdown', 'md' => $md]);
 	}
 
 	public function Submit(Request $req) {
 		if(!Auth::check()) {
-			return view('frontend.nologin', ['title' => 'Hold on a sec... - Awesome-Selfhosted']);
+			return view('frontend.nologin', ['title' => 'Hold on a sec...']);
 		}
-		return view('frontend.submit', ['title' => 'Submit Item - Awesome-Selfhosted']);
+		return view('frontend.submit', ['title' => 'Submit Item']);
 	}
 
 	public function Team(Request $req) {
 		$collaborators = User::where('user_collab', '=', '1')->orWhere('user_admin', '=', '1')->get();
-		return view('frontend.team', ['title' => 'Team - Awesome-Selfhosted', 'collabs' => $collaborators]);
+		return view('frontend.team', ['title' => 'Team', 'collabs' => $collaborators]);
 	}
 
 	public function Login(Request $req) {
