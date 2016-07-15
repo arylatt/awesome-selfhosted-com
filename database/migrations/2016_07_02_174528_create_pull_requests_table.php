@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePullRequestsTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreatePullRequestsTable extends Migration
             $table->integer('pr_mergeable');
             $table->integer('pr_locked')->default(0);
             $table->timestamps();
-            
+
             $table->primary('pr_id');
         });
     }
