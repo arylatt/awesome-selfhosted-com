@@ -30,6 +30,9 @@
 		<a href="https://chat.awesome-selfhosted.com/" class="item">
 			Chat
 		</a>
+		<a href="https://gogs.awesome-selfhosted.com/" class="item">
+			Gogs
+		</a>
 		<div class="right menu">
 			<div id="awesh_search" class="ui category search item">
 				<div class="ui transparent icon input">
