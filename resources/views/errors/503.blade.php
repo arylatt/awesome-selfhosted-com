@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Be right back.</title>
+        <title>Awesome-Selfhosted</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -35,12 +35,31 @@
                 font-size: 72px;
                 margin-bottom: 40px;
             }
+
+            .sub-title {
+                font-size: 40px;
+                margin-bottom: 40px;
+            }
+
+            .powered-by {
+                font-size: 20px;
+            }
+
+            .powered-by > p {
+                margin-bottom: 10px;
+                margin-left: -250px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be right back.</div>
+                <div class="title">Awesome-Selfhosted</div>
+                <div class="sub-title">We are currently working on the site.<br />Please check back soon!</div>
+                <div class="powered-by">
+                    <p>Powered By:</p>
+                    <img src="https://www.dreamhost.com/assets/images/logo.dreamhost.svg" width="50%" height="50%"/>
+                </div>
             </div>
         </div>
     </body>
