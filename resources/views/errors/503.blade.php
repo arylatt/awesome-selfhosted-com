@@ -3,7 +3,7 @@
     <head>
         <title>Awesome-Selfhosted</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
 
         <style>
             html, body {
@@ -16,7 +16,7 @@
                 width: 100%;
                 color: #B0BEC5;
                 display: table;
-                font-weight: 100;
+                font-weight: 300;
                 font-family: 'Lato';
             }
 
