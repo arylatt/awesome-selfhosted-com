@@ -1,6 +1,6 @@
 <div class="ui footer container">
 	<div class="ui stacking divided grid">
-		<div class="four column row">
+		<div class="three column row">
 			<div class="column">
 				<h4 class="ui header">LICENSE</h4>
 				<p>Awesome-Selfhosted is licensed under the <a href="https://github.com/Kickball/awesome-selfhosted/blob/master/LICENSE" target="_blank">Creative Commons Attribution-ShareAlike 3.0 (CC-BY-SA-3.0)</a> license.</p>
@@ -9,9 +9,6 @@
 			<div class="column">
 				<h4 class="ui header">SPONSORS</h4>
 				<a href="https://www.dreamhost.com/" target="_blank"><img class="ui medium image" src="/img/dreamhost.svg" alt="DreamHost" /></a>
-			</div>
-			<div class="column">
-				<h4 class="ui header">CONTACT US</h4>
 			</div>
 			<div class="column">
 				<h4 class="ui header">LINKS</h4>

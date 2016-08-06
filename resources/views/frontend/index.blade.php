@@ -14,28 +14,36 @@
 			<div class="ui divider"></div>
 			<div class="five column centered row">
 				<div class="column">
-					<img class="ui small centered circular image" src="/img/placeholder.jpg" />
-					<h3 class="ui center aligned header">
-						View Our List
-					</h3>
+					<a href="/view/markdown/">
+						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<h3 class="ui center aligned header">
+							View Our List
+						</h3>
+					</a>
 				</div>
 				<div class="column">
-					<img class="ui small centered circular image" src="/img/placeholder.jpg" />
-					<h3 class="ui center aligned header">
-						Contribute
-					</h3>
+					<a href="/submit/">
+						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<h3 class="ui center aligned header">
+							Contribute
+						</h3>
+					</a>
 				</div>
 				<div class="column">
-					<img class="ui small centered circular image" src="/img/placeholder.jpg" />
-					<h3 class="ui center aligned header">
-						Our Sponsors
-					</h3>
+					<a href="/sponsors/">
+						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<h3 class="ui center aligned header">
+							Our Sponsors
+						</h3>
+					</a>
 				</div>
 				<div class="column">
-					<img class="ui small centered circular image" src="/img/placeholder.jpg" />
-					<h3 class="ui center aligned header">
-						About / FAQ
-					</h3>
+					<a href="/about/">
+						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<h3 class="ui center aligned header">
+							About / FAQ
+						</h3>
+					</a>
 				</div>
 			</div>
 			<div class="ui divider"></div>
