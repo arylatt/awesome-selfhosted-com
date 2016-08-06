@@ -1,5 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
 html {
 	box-sizing: border-box;
+	font-family: 'Raleway', 'Roboto' !important;
 }
 
 body {
@@ -8,6 +11,7 @@ body {
 	padding-bottom: 250px;
 	min-height: 100%;
 	height: auto;
+	font-family: 'Raleway', 'Roboto' !important;
 }
 
 .page {
@@ -46,4 +50,14 @@ footer.ui.attached.segment {
 
 .ui.submit-nologin.grid > .twelve.wide.column {
 	padding-top: 40px;
+}
+
+.ui.footer.container {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 65%;
+}
+
+.ui.footer.container .ui.grid {
+	min-height: 180px;
 }
