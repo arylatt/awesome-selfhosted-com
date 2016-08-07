@@ -1,5 +1,7 @@
 <?php
 
+# =========== CONFIG ===========
+
 namespace App\Library;
 
 require_once("grok.php");
@@ -16,3 +18,11 @@ $since = $now->sub(new DateInterval($timeThreshold));
 $since = $since->format(DateTime::ATOM);
 
 $fileURL = "https://raw.githubusercontent.com/{$config["gh_repo_owner"]}/{$config["gh_repo_name"]}/master/README.md";
+
+# =========== RETRIEVAL ===========
+
+
+# =========== PARSING ===========
+
+
+# =========== SCANNING ===========
