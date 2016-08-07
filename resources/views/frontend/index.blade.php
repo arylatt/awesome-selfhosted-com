@@ -14,7 +14,7 @@
 			<div class="ui divider"></div>
 			<div class="five column centered row">
 				<div class="column">
-					<a href="/view/markdown/">
+					<a href="/view/markdown">
 						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
 						<h3 class="ui center aligned header">
 							View Our List
@@ -22,7 +22,7 @@
 					</a>
 				</div>
 				<div class="column">
-					<a href="/submit/">
+					<a href="/submit">
 						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
 						<h3 class="ui center aligned header">
 							Contribute
@@ -30,7 +30,7 @@
 					</a>
 				</div>
 				<div class="column">
-					<a href="/sponsors/">
+					<a href="/sponsors">
 						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
 						<h3 class="ui center aligned header">
 							Our Sponsors
@@ -38,7 +38,7 @@
 					</a>
 				</div>
 				<div class="column">
-					<a href="/about/">
+					<a href="/about">
 						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
 						<h3 class="ui center aligned header">
 							About / FAQ
