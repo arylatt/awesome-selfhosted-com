@@ -4,18 +4,18 @@ namespace App\Library;
 
 /**
  * Simple Grok pattern implementation
- * Currently there is NO support for predicates
+ * Currently there is NO support for predicates.
  *
  * @author kos4live <php-grok@mail.go2inter.net>
+ *
  * @see http://code.google.com/p/semicomplete/wiki/Grok
  */
-
 class Grok
 {
     protected $pattern_regex = null;
     protected $matchCount = 0;
 
-    protected $patterns = array(
+    protected $patterns = [
         'USERNAME'      => '[a-zA-Z0-9_-]+',
         'USER'          => '%{USERNAME}',
         'INT'           => '(?:[+-]?(?:[0-9]+))',
@@ -35,7 +35,7 @@ class Grok
         'QUOTEDSTRING'  => '(?:(?<!\\\\)(?:"(?:\\.|[^\\"]+)*"|(?:\'(?:\\.|[^\\\']+)*\')|(?:`(?:\\.|[^\\`]+)*`)))',
         'UUID'          => '[A-Fa-f0-9]{8}-(?:[A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}',
 
-        # Networking
+        // Networking
         'MAC'           => '(?:%{CISCOMAC}|%{WINDOWSMAC}|%{COMMONMAC})',
         'CISCOMAC'      => '(?:(?:[A-Fa-f0-9]{4}\.){2}[A-Fa-f0-9]{4})',
         'WINDOWSMAC'    => '(?:(?:[A-Fa-f0-9]{2}-){5}[A-Fa-f0-9]{2})',
@@ -46,45 +46,45 @@ class Grok
         'IPORHOST'      => '(?:%{HOSTNAME}|%{IP})',
         'HOSTPORT'      => '(?:%{IPORHOST=~/\./}:%{POSINT})',
 
-        # paths
+        // paths
         'PATH'          => '(?:%{UNIXPATH}|%{WINPATH})',
         'UNIXPATH'      => '(?:/(?:[\w_%!$@:.,-]+|\\.)*)+',
-        #'UNIXPATH'      => '(?<![\w\/])(?:/[^\/\s?*]*)+',
+        //'UNIXPATH'      => '(?<![\w\/])(?:/[^\/\s?*]*)+',
         'LINUXTTY'      => '(?:/dev/pts/%{NONNEGINT})',
         'BSDTTY'        => '(?:/dev/tty[pq][a-z0-9])',
         'TTY'           => '(?:%{BSDTTY}|%{LINUXTTY})',
         'WINPATH'       => '(?:[A-Za-z]+:|\\)(?:\\[^\\?*]*)+',
         'URIPROTO'      => '[A-Za-z]+(\+[A-Za-z+]+)?',
         'URIHOST'       => '%{IPORHOST}(?::%{POSINT:port})?',
-        # uripath comes loosely from RFC1738, but mostly from what Firefox
-        # doesn't turn into %XX
+        // uripath comes loosely from RFC1738, but mostly from what Firefox
+        // doesn't turn into %XX
         'URIPATH'       => '(?:/[A-Za-z0-9$.+!*\'(){},~:;=#%_-]*)+',
-        #'URIPARAM'      => '\?(?:[A-Za-z0-9]+(?:=(?:[^&]*))?(?:&(?:[A-Za-z0-9]+(?:=(?:[^&]*))?)?)*)?'
+        //'URIPARAM'      => '\?(?:[A-Za-z0-9]+(?:=(?:[^&]*))?(?:&(?:[A-Za-z0-9]+(?:=(?:[^&]*))?)?)*)?'
         'URIPARAM'      => '\?[A-Za-z0-9$.+!*\'|(){},~#%&/=:;_-]*',
         'URIPATHPARAM'  => '%{URIPATH}(?:%{URIPARAM})?',
         'URI'           => '%{URIPROTO}://(?:%{USER}(?::[^@]*)?@)?(?:%{URIHOST})?(?:%{URIPATHPARAM})?',
 
-        # Months: January, Feb, 3, 03, 12, December
+        // Months: January, Feb, 3, 03, 12, December
         'MONTH'     => '\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b',
         'MONTHNUM'  => '(?:0?[1-9]|1[0-2])',
         'MONTHDAY'  => '(?:(?:0[1-9])|(?:[12][0-9])|(?:3[01])|[1-9])',
 
-        # Days: Monday, Tue, Thu, etc...
+        // Days: Monday, Tue, Thu, etc...
         'DAY' => '(?:Mon(?:day)?|Tue(?:sday)?|Wed(?:nesday)?|Thu(?:rsday)?|Fri(?:day)?|Sat(?:urday)?|Sun(?:day)?)',
 
-        # Years?
+        // Years?
         'YEAR'      => '[0-9]+',
-        # Time: HH:MM:SS
-        #'TIME'      => '\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?',
-        # I'm still on the fence about using grok to perform the time match,
-        # since it's probably slower.
-        #'TIME'      => '%{POSINT<24}:%{POSINT<60}(?::%{POSINT<60}(?:\.%{POSINT})?)?',
+        // Time: HH:MM:SS
+        //'TIME'      => '\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?',
+        // I'm still on the fence about using grok to perform the time match,
+        // since it's probably slower.
+        //'TIME'      => '%{POSINT<24}:%{POSINT<60}(?::%{POSINT<60}(?:\.%{POSINT})?)?',
         'HOUR'      => '(?:2[0123]|[01][0-9])',
         'MINUTE'    => '(?:[0-5][0-9])',
-        # '60' is a leap second in most time standards and thus is valid.
+        // '60' is a leap second in most time standards and thus is valid.
         'SECOND'    => '(?:(?:[0-5][0-9]|60)(?:[.,][0-9]+)?)',
         'TIME'      => '(?!<[0-9])%{HOUR}:%{MINUTE}(?::%{SECOND})(?![0-9])',
-        # datestamp is YYYY/MM/DD-HH:MM:SS.UUUU (or something like it)
+        // datestamp is YYYY/MM/DD-HH:MM:SS.UUUU (or something like it)
         'DATE_US'           => '%{MONTHNUM}[/-]%{MONTHDAY}[/-]%{YEAR}',
         'DATE_EU'           => '%{YEAR}[/-]%{MONTHNUM}[/-]%{MONTHDAY}',
         'ISO8601_TIMEZONE'  => '(?:Z|[+-]%{HOUR}(?::?%{MINUTE}))',
@@ -96,7 +96,7 @@ class Grok
         'DATESTAMP_RFC822'  => '%{DAY} %{MONTH} %{MONTHDAY} %{YEAR} %{TIME} %{TZ}',
         'DATESTAMP_OTHER'   => '%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{TZ} %{YEAR}',
 
-        # Syslog Dates: Month Day HH:MM:SS
+        // Syslog Dates: Month Day HH:MM:SS
         'SYSLOGTIMESTAMP'   => '%{MONTH} +%{MONTHDAY} %{TIME}',
         'PROG'              => '(?:[\w._/%-]+)',
         'SYSLOGPROG'        => '%{PROG:program}(?:\[%{POSINT:pid}\])?',
@@ -104,21 +104,21 @@ class Grok
         'SYSLOGFACILITY'    => '<%{NONNEGINT:facility}.%{NONNEGINT:priority}>',
         'HTTPDATE'          => '%{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME} %{INT}',
 
-        # Shortcuts
+        // Shortcuts
         'QS' => '%{QUOTEDSTRING}',
 
-        # Log formats
+        // Log formats
         'SYSLOGBASE'        => '%{SYSLOGTIMESTAMP:timestamp} (?:%{SYSLOGFACILITY} )?%{SYSLOGHOST:logsource} %{SYSLOGPROG}:',
         'COMBINEDAPACHELOG' => '%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{URIPATHPARAM:request}(?: HTTP/%{NUMBER:httpversion})?|-)" %{NUMBER:response} (?:%{NUMBER:bytes}|-) "(?:%{URI:referrer}|-)" %{QS:agent}',
 
-        # Log Levels
+        // Log Levels
         'LOGLEVEL'  => '([D|d]ebug|DEBUG|[N|n]otice|NOTICE|[I|i]nfo|INFO|[W|w]arn?(?:ing)?|WARN?(?:ING)?|[E|e]rr?(?:or)?|ERR?(?:OR)?|[C|c]rit?(?:ical)?|CRIT?(?:ICAL)?|[F|f]atal|FATAL|[S|s]evere|SEVERE)',
-    );
+    ];
 
-    protected $fieldMap = array();
+    protected $fieldMap = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array|null $patterns Patterns, overrides original patterns
      */
@@ -127,27 +127,27 @@ class Grok
         // Pattern to match %{FOO:bar} or %{FOO<=3}
         // currently no predicate supported
         $this->pattern_regex = "/(?!<\\\\)%\{"
-            ."(?<name>"
-            .   "(?<pattern>[A-z0-9]+)"
-            .   "(?::(?<subname>[A-z0-9_:]+))?"
-            .")"
-            ."(?:="
-            .   "(?<definition>"
-            .       "(?:"
-            .           "(?P<curly2>\\{(?:(?>[^{}]+|(?>\\\\[{}])+)|(?P>curly2))*\\})+"
-            .           "|"
-            .           "(?:[^{}]+|\\\\[{}])+"
-            .       ")+"
-            .   ")"
-            .")?"
-            ."\\s*(?<predicate>"
-            .   "(?:"
-            .       "(?P<curly>\\{(?:(?>[^{}]+|(?>\\\\[{}])+)|(?P>curly))*\\})"
-            .       "|"
-            .       "(?:[^{}]+|\\\\[{}])+"
-            .   ")+"
-            .")?"
-            ."\\}/";
+            .'(?<name>'
+            .'(?<pattern>[A-z0-9]+)'
+            .'(?::(?<subname>[A-z0-9_:]+))?'
+            .')'
+            .'(?:='
+            .'(?<definition>'
+            .'(?:'
+            .'(?P<curly2>\\{(?:(?>[^{}]+|(?>\\\\[{}])+)|(?P>curly2))*\\})+'
+            .'|'
+            .'(?:[^{}]+|\\\\[{}])+'
+            .')+'
+            .')'
+            .')?'
+            .'\\s*(?<predicate>'
+            .'(?:'
+            .'(?P<curly>\\{(?:(?>[^{}]+|(?>\\\\[{}])+)|(?P>curly))*\\})'
+            .'|'
+            .'(?:[^{}]+|\\\\[{}])+'
+            .')+'
+            .')?'
+            .'\\}/';
 
         if (!is_null($patterns)) {
             $this->patterns = $patterns;
@@ -155,7 +155,7 @@ class Grok
     }
 
     /**
-     * Add one additional pattern
+     * Add one additional pattern.
      *
      * @param string $name    Name
      * @param string $pattern Pattern
@@ -177,16 +177,16 @@ class Grok
     }
 
     /**
-     * Reset internal data
+     * Reset internal data.
      */
     protected function reset()
     {
         $this->matchCount = 0;
-        $this->fieldMap = array();
+        $this->fieldMap = [];
     }
 
     /**
-     * Resolve and merge grok pattern
+     * Resolve and merge grok pattern.
      *
      * @param string $pattern Pattern
      *
@@ -208,6 +208,7 @@ class Grok
                 $pattern = str_replace($match[0], $subPattern, $pattern, $replaced);
             }
         }
+
         return $pattern;
     }
 
@@ -223,9 +224,9 @@ class Grok
      */
     public function parse($pattern, $content, $options = '')
     {
-        $results = array();
+        $results = [];
         $this->reset();
-        $pattern = "/".str_replace('/', '\/', $this->resolve($pattern))."/".$options;
+        $pattern = '/'.str_replace('/', '\/', $this->resolve($pattern)).'/'.$options;
         //var_dump('resolved pattern:', $pattern);
         if (preg_match_all($pattern, $content, $matches, PREG_SET_ORDER)) {
             if (count($matches) > 0 && isset($matches[0]) && is_array($matches[0])) {
@@ -236,6 +237,7 @@ class Grok
                 }
             }
         }
+
         return !empty($results) ? $results : false;
     }
 }
