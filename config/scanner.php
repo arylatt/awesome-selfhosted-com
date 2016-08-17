@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'grokpattern' => env('GROK_PATTERN'),
+    'grokpattern' => env('GITHUB_ITEM_GROK_PATTERN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,6 +33,6 @@ return [
     |
     */
 
-    'maintainedthreshold' => env('MAINTAINED_THRESHOLD'),
+    'maintainedthreshold' => env('GITHUB_REPOSITORY_MAINTAINED_THRESHOLD'),
 
 ];
