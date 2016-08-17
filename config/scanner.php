@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'repositoryurl' => env('REPOSITORY_URL'),
+    'repositoryurl' => env('GITHUB_REPOSITORY_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     | Maintained Threshold
     |--------------------------------------------------------------------------
     |
-    | The threshold for projects classified as maintained.
+    | The integer threshold in days for projects classified as maintained.
     |
     */
 

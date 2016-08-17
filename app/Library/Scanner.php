@@ -1,28 +1,23 @@
 <?php
 
-// =========== CONFIG ===========
-
 namespace App\Library;
 
-require_once 'grok.php';
-$grok = new Grok();
+use Carbon;
 
-$grokPatterns = [
-    'githubRepos' => "\[%{DATA}]\(https://github\.com/%{USERNAME:username}/%{USERNAME:repo}\)",
-    'urls'        => "\(%{DATA:url}\)",
-];
+class Scanner 
+{
+	$grok = new Grok();
 
-$today = date('d.m.y');
-$timeThreshold = 'P6M';
-$since = $now->sub(new DateInterval($timeThreshold));
-$since = $since->format(DateTime::ATOM);
+	$grokPatterns = [
+	    'githubRepos' => "\[%{DATA}]\(https://github\.com/%{USERNAME:username}/%{USERNAME:repo}\)",
+	    'urls'        => "\(%{DATA:url}\)",
+	];
 
-$fileURL = "https://raw.githubusercontent.com/{$config['gh_repo_owner']}/{$config['gh_repo_name']}/master/README.md";
+	$today = Carbon::now();
+	$since = $now->subDays(config('maintainedthreshold'));
+	$since = $since->toAtomString();
 
-// =========== RETRIEVAL ===========
-
-
-// =========== PARSING ===========
+	$fileURL = config('repositoryurl');
 
 
-// =========== SCANNING ===========
+}
