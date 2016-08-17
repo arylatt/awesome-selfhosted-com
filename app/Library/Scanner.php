@@ -13,12 +13,21 @@ class Scanner
         $grokPatterns = [
             'githubRepos' => "\[%{DATA}]\(https://github\.com/%{USERNAME:username}/%{USERNAME:repo}\)",
             'urls'        => "\(%{DATA:url}\)",
+            'items'       => config('itemgrokpattern'),
         ];
 
         $today = Carbon::now();
         $since = $now->subDays(config('maintainedthreshold'));
         $since = $since->toAtomString();
 
-        $fileURL = config('repositoryurl');
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL           => config('repositoryurl'),
+            CURLOPT_RETURNTRANSFER=> true,
+        ]);
+        $filecontents = curl_exec($ch);
+        curl_close($ch);
+
+        
     }
 }
