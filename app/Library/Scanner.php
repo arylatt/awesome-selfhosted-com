@@ -22,12 +22,10 @@ class Scanner
 
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL           => config('repositoryurl'),
-            CURLOPT_RETURNTRANSFER=> true,
+            CURLOPT_URL            => config('repositoryurl'),
+            CURLOPT_RETURNTRANSFER => true,
         ]);
         $filecontents = curl_exec($ch);
         curl_close($ch);
-
-        
     }
 }
