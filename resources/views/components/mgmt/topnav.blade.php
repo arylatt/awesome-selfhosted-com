@@ -1,6 +1,6 @@
 <div class="ui top fixed inverted menu">
 	<div class="ui container">
-		<a href="/" class="header item">
+		<a href="/mgmt" class="header item">
 			Collab Panel
 		</a>
 		<a href="/mgmt/run" class="item">
