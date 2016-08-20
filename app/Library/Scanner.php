@@ -10,14 +10,14 @@ class Scanner
     protected $grok;
     protected $grokPatterns;
     protected $maxAge;
-    
+
     protected $headers = [];
     protected $subheaders = [];
     protected $descriptions = [];
     protected $validLinks = [];
     protected $invaldShit = [];
 
-    public function __construct() 
+    public function __construct()
     {
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -48,75 +48,62 @@ class Scanner
         return $this->grokPatterns;
     }
 
-    public function Scan() {
+    public function Scan()
+    {
         $start = strpos($this->file, config('scanner.starttag')) + strlen(config('scanner.starttag'));
         $end = strpos($this->file, config('scanner.endtag')) - strlen(config('scanner.endtag'));
-        if($start === -1 || $end === -1)
-        {
+        if ($start === -1 || $end === -1) {
             return false;
         }
         $end = $end - $start;
         $lines = explode("\n", substr($this->file, $start, $end));
         $lastItem;
-        foreach($lines as $line)
-        {
-            if(substr($line, 0, 3) == "## ")
-            {
+        foreach ($lines as $line) {
+            if (substr($line, 0, 3) == '## ') {
                 array_push($this->headers, substr($line, 3));
-                $lastItem = "h";
-            }
-            else if(substr($line, 0, 4) == "### ")
-            {
+                $lastItem = 'h';
+            } elseif (substr($line, 0, 4) == '### ') {
                 array_push($this->subheaders, substr($line, 4));
-                $lastItem = "s";
-            }
-            else if(substr($line, 0, 4) == "  * ")
-            {
+                $lastItem = 's';
+            } elseif (substr($line, 0, 4) == '  * ') {
                 $grokResult = $this->grok->parse($this->grokPatterns['items'], substr($line, 4));
-                if($grokResult === false)
-                {
+                if ($grokResult === false) {
                     array_push($this->invaldShit, substr($line, 4));
-                    $lastItem = "i";
-                }
-                else
-                {
+                    $lastItem = 'i';
+                } else {
                     array_push($this->validLinks, $grokResult);
-                    $lastItem = "l";
+                    $lastItem = 'l';
                 }
-            }
-            else
-            {
-                if($line != "")
-                {
-                    if($lastItem == "h" || $lastItem == "s")
-                    {
+            } else {
+                if ($line != '') {
+                    if ($lastItem == 'h' || $lastItem == 's') {
                         array_push($this->descriptions, $line);
-                    }
-                    else
-                    {
+                    } else {
                         array_push($this->invaldShit, $line);
                     }
                 }
             }
         }
+
         return true;
     }
 
-    public function GetResults() {
+    public function GetResults()
+    {
         return [
             'stats' => [
-                'headers' => count($this->headers),
-                'subheaders' => count($this->subheaders),
+                'headers'      => count($this->headers),
+                'subheaders'   => count($this->subheaders),
                 'descriptions' => count($this->descriptions),
-                'validLinks' => count($this->validLinks),
-                'invalidShit' => count($this->invaldShit),
+                'validLinks'   => count($this->validLinks),
+                'invalidShit'  => count($this->invaldShit),
             ],
             'data' => [
-                'headers' => $this->headers,
-                'subheaders' => $this->subheaders,
+                'headers'      => $this->headers,
+                'subheaders'   => $this->subheaders,
                 'descriptions' => $this->descriptions,
-                'validLinks' => $this->validLinks,
-                'invalidShit' => $this->invaldShit,
+                'validLinks'   => $this->validLinks,
+                'invalidShit'  => $this->invaldShit,
             ],
         ];
     }
