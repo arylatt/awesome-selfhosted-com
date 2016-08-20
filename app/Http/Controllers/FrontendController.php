@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
+use App\Library\Scanner;
 
 class FrontendController extends Controller
 {
@@ -91,5 +92,12 @@ class FrontendController extends Controller
         Auth::logout();
 
         return redirect('/');
+    }
+
+    public function ScanTest(Request $req) //Debugging code. Remove me
+    {
+        $scanner = new Scanner();
+        $scanner->Scan();
+        dd($scanner->GetResults());
     }
 }
