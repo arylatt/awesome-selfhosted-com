@@ -25,9 +25,9 @@ return [
     'customgrok' => [
         'PROPRIETARY' => '(`⚠` )?',
         'DESCRIPTION' => '.{1,249}\.',
-        'LINKS' => '(\(\[%{LINK_TITLE:l1_t}\]\(%{URL:l1_u}\)(, \[%{LINK_TITLE:l2_t}\]\(%{URL:l2_u}\))?(, \[%{LINK_TITLE:l3_t}\]\(%{URL:l3_u}\))?\) )?',
-        'LINK_TITLE' => '(Demo|Example|Source Code)',
-        'URL' => '%{URIPROTO}://(?:%{USER}(?::[^@]*)?@)?(?:%{IPORHOST})?(?:%{URIPATHPARAM})?',
+        'LINKS'       => '(\(\[%{LINK_TITLE:l1_t}\]\(%{URL:l1_u}\)(, \[%{LINK_TITLE:l2_t}\]\(%{URL:l2_u}\))?(, \[%{LINK_TITLE:l3_t}\]\(%{URL:l3_u}\))?\) )?',
+        'LINK_TITLE'  => '(Demo|Example|Source Code)',
+        'URL'         => '%{URIPROTO}://(?:%{USER}(?::[^@]*)?@)?(?:%{IPORHOST})?(?:%{URIPATHPARAM})?',
     ],
 
 

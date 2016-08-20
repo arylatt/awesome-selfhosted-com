@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Scanner;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
-use App\Library\Scanner;
 
 class FrontendController extends Controller
 {
