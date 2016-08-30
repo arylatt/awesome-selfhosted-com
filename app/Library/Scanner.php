@@ -92,17 +92,17 @@ class Scanner
     {
         return [
             'stats' => [
-                'headers'      => count($this->headers),
-                'subheaders'   => count($this->subheaders),
-                'descriptions' => count($this->descriptions),
-                'validLinks'   => count($this->validLinks),
+                'headers'       => count($this->headers),
+                'subheaders'    => count($this->subheaders),
+                'descriptions'  => count($this->descriptions),
+                'validLinks'    => count($this->validLinks),
                 'invalidItems'  => count($this->invalidItems),
             ],
             'data' => [
-                'headers'      => $this->headers,
-                'subheaders'   => $this->subheaders,
-                'descriptions' => $this->descriptions,
-                'validLinks'   => $this->validLinks,
+                'headers'       => $this->headers,
+                'subheaders'    => $this->subheaders,
+                'descriptions'  => $this->descriptions,
+                'validLinks'    => $this->validLinks,
                 'invalidItems'  => $this->invalidItems,
             ],
         ];
