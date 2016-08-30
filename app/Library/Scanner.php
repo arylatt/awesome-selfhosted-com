@@ -15,7 +15,7 @@ class Scanner
     protected $subheaders = [];
     protected $descriptions = [];
     protected $validLinks = [];
-    protected $invaldShit = [];
+    protected $invalidItems = [];
 
     public function __construct()
     {
@@ -68,7 +68,7 @@ class Scanner
             } elseif (substr($line, 0, 4) == '  * ') {
                 $grokResult = $this->grok->parse($this->grokPatterns['items'], substr($line, 4));
                 if ($grokResult === false) {
-                    array_push($this->invaldShit, substr($line, 4));
+                    array_push($this->invalidItems, substr($line, 4));
                     $lastItem = 'i';
                 } else {
                     array_push($this->validLinks, $grokResult);
@@ -79,7 +79,7 @@ class Scanner
                     if ($lastItem == 'h' || $lastItem == 's') {
                         array_push($this->descriptions, $line);
                     } else {
-                        array_push($this->invaldShit, $line);
+                        array_push($this->invalidItems, $line);
                     }
                 }
             }
@@ -96,14 +96,14 @@ class Scanner
                 'subheaders'   => count($this->subheaders),
                 'descriptions' => count($this->descriptions),
                 'validLinks'   => count($this->validLinks),
-                'invalidShit'  => count($this->invaldShit),
+                'invalidItems'  => count($this->invalidItems),
             ],
             'data' => [
                 'headers'      => $this->headers,
                 'subheaders'   => $this->subheaders,
                 'descriptions' => $this->descriptions,
                 'validLinks'   => $this->validLinks,
-                'invalidShit'  => $this->invaldShit,
+                'invalidItems'  => $this->invalidItems,
             ],
         ];
     }
