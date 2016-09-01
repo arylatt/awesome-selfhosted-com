@@ -16,6 +16,11 @@ elixir(function(mix) {
     	'../../../vendor/semantic/ui/dist/semantic.min.css',
         'common.css'
     ])
+    .styles([
+        '../../../vendor/semantic/ui/dist/semantic.min.css',
+        'common.css',
+        'collab.css'
+    ], 'public/css/mgmt.css')
     .scripts([
     	'../../../vendor/components/jquery/jquery.min.js',
     	'../../../vendor/semantic/ui/dist/semantic.min.js',

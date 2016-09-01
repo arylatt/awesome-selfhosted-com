@@ -18,6 +18,6 @@ class CollabController extends Controller
 
     public function Index(Request $req)
     {
-        return 'Collab';
+        return view('mgmt.index', ['title' => 'Dashboard']);
     }
 }
