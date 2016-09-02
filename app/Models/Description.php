@@ -11,6 +11,6 @@ class Description extends Model
 
     public function Header()
     {
-    	return $this->belongsTo('App\Models\Header');
+        return $this->belongsTo('App\Models\Header');
     }
 }

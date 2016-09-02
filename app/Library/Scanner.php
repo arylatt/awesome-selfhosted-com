@@ -49,11 +49,11 @@ class Scanner
         return $this->grokPatterns;
     }
 
-    public function Scan() {
+    public function Scan()
+    {
         $start = strpos($this->file, config('scanner.starttag')) + strlen(config('scanner.starttag'));
         $end = strpos($this->file, config('scanner.endtag')) - strlen(config('scanner.endtag'));
-        if($start === -1 || $end === -1)
-        {
+        if ($start === -1 || $end === -1) {
             return false;
         }
         $end = $end - $start;
@@ -61,55 +61,46 @@ class Scanner
         $lastHeaderId = 0;
         $lastHeaderLevel = 2;
         $headers = new Collection();
-        foreach($lines as $line)
-        {
-            if(substr($line, 0, 2) == "##")
-            {
+        foreach ($lines as $line) {
+            if (substr($line, 0, 2) == '##') {
                 $headerText = substr($line, strpos($line, '# ') + 2);
                 $headerLevel = strpos($line, '# ') + 1;
-                if($headerLevel == 2)
-                {
-                	$headerParent = 0;
-                }
-                else if($headerLevel == $lastHeaderLevel)
-                {
-                	$headerParent == Header::find($lastHeaderId)->header_parent;
-                }
-                else if($headerLevel > $lastHeaderLevel)
-                {
-                	$headerParent = $lastHeaderId;
-                }
-                else
-                {
-                	dd($headers->last(function($k, $v) { return $v['header_level'] == $headerLevel; }));
-                	$headerParent = $headers->where('header_level', '=', $headerLevel)->last()->header_parent;
+                if ($headerLevel == 2) {
+                    $headerParent = 0;
+                } elseif ($headerLevel == $lastHeaderLevel) {
+                    $headerParent == Header::find($lastHeaderId)->header_parent;
+                } elseif ($headerLevel > $lastHeaderLevel) {
+                    $headerParent = $lastHeaderId;
+                } else {
+                    dd($headers->last(function ($k, $v) {
+                        return $v['header_level'] == $headerLevel;
+                    }));
+                    $headerParent = $headers->where('header_level', '=', $headerLevel)->last()->header_parent;
                 }
                 $header = Header::where('header_text', '=', $headerText)->first();
-                if(!$header)
-                {
-                	$header = Header::create(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
-                	$lastHeaderId = $header->header_id;
-                	$lastHeaderLevel = $header->header_level;
-                	$headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
-                }
-                else
-                {
-                	if($header->header_level != $headerLevel || $header->header_parent != $headerParent)
-                	{
-                		$header->header_level = $headerLevel;
-                		$header->header_parent = $headerParent;
-                		$header->save();
-	                	$lastHeaderId = $header->header_id;
-	                	$lastHeaderLevel = $header->header_level;
-                		$headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
-                	}
+                if (!$header) {
+                    $header = Header::create(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                    $lastHeaderId = $header->header_id;
+                    $lastHeaderLevel = $header->header_level;
+                    $headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                } else {
+                    if ($header->header_level != $headerLevel || $header->header_parent != $headerParent) {
+                        $header->header_level = $headerLevel;
+                        $header->header_parent = $headerParent;
+                        $header->save();
+                        $lastHeaderId = $header->header_id;
+                        $lastHeaderLevel = $header->header_level;
+                        $headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                    }
                 }
             }
         }
+
         return true;
     }
 
-    public function GetResults() {
+    public function GetResults()
+    {
         return [
             'stats' => [
                 'headers'       => count($this->headers),

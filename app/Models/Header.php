@@ -31,6 +31,6 @@ class Header extends Model
 
     public static function MainHeaders()
     {
-        return Header::where('header_parent', '=', 0)->orderBy('header_text', 'ASC')->get();
+        return self::where('header_parent', '=', 0)->orderBy('header_text', 'ASC')->get();
     }
 }
