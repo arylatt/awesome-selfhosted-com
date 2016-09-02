@@ -76,4 +76,7 @@ footer.ui.attached.segment {
 .ui.label {
 	border-radius: 0px;
 }
-/*# sourceMappingURL=all.css.map */
+.ui.inverted.menu {
+	background: #3498db;
+}
+/*# sourceMappingURL=mgmt.css.map */

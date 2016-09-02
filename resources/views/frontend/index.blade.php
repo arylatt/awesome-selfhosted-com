@@ -4,18 +4,18 @@
 	<div class="ui container">
 		<div class="ui grid">
 			<div class="row">
-				<div class="column">
+				<div class="ui center aligned column">
 					<h1 class="ui header">
 						Awesome-Selfhosted
 					</h1>
-					<p>goals we created a curated list of ___ ____ ___</p>
+					<p>We have curated a community driven directory of selfhosted services, and are working to enable communication withn the selfhosted community.</p>
 				</div>
 			</div>
 			<div class="ui divider"></div>
 			<div class="five column centered row">
 				<div class="column">
 					<a href="/view/markdown">
-						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<i class="massive black browser icon"></i>
 						<h3 class="ui center aligned header">
 							View Our List
 						</h3>
@@ -23,7 +23,7 @@
 				</div>
 				<div class="column">
 					<a href="/submit">
-						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<i class="massive black edit icon"></i>
 						<h3 class="ui center aligned header">
 							Contribute
 						</h3>
@@ -31,7 +31,7 @@
 				</div>
 				<div class="column">
 					<a href="/sponsors">
-						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<i class="massive black users icon"></i>
 						<h3 class="ui center aligned header">
 							Our Sponsors
 						</h3>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="column">
 					<a href="/about">
-						<img class="ui small centered circular image" src="/img/placeholder.jpg" />
+						<i class="massive black help icon"></i>
 						<h3 class="ui center aligned header">
 							About / FAQ
 						</h3>

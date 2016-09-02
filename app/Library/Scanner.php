@@ -12,8 +12,13 @@ class Scanner
     protected $grok;
     protected $grokPatterns;
     protected $maxAge;
+    protected $headers = [];
+    protected $subheaders = [];
+    protected $descriptions = [];
+    protected $validLinks = [];
+    protected $invalidItems = [];
 
-    public function __construct() 
+    public function __construct()
     {
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -107,18 +112,18 @@ class Scanner
     public function GetResults() {
         return [
             'stats' => [
-                'headers' => count(Header::MainHeaders()),
-                'subheaders' => count(Header::where('header_parent', '!=', 0)->orderBy('header_text', 'ASC')->get()),
-                'descriptions' => '',
-                'validLinks' => '',
-                'invalidShit' => '',
+                'headers'       => count($this->headers),
+                'subheaders'    => count($this->subheaders),
+                'descriptions'  => count($this->descriptions),
+                'validLinks'    => count($this->validLinks),
+                'invalidItems'  => count($this->invalidItems),
             ],
             'data' => [
-                'headers' => Header::MainHeaders(),
-                'subheaders' => Header::where('header_parent', '!=', 0)->orderBy('header_text', 'ASC')->get(),
-                'descriptions' => '',
-                'validLinks' => '',
-                'invalidShit' => '',
+                'headers'       => $this->headers,
+                'subheaders'    => $this->subheaders,
+                'descriptions'  => $this->descriptions,
+                'validLinks'    => $this->validLinks,
+                'invalidItems'  => $this->invalidItems,
             ],
         ];
     }

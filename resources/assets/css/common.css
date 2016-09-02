@@ -61,3 +61,7 @@ footer.ui.attached.segment {
 .ui.footer.container .ui.grid {
 	min-height: 180px;
 }
+
+.ui.label {
+	border-radius: 0px;
+}
