@@ -4,11 +4,11 @@
 	<div class="ui container">
 		<div class="ui grid">
 			<div class="row">
-				<div class="column">
+				<div class="ui center aligned column">
 					<h1 class="ui header">
 						Awesome-Selfhosted
 					</h1>
-					<p>goals we created a curated list of ___ ____ ___</p>
+					<p>We have curated a community driven directory of selfhosted services, and are working to enable communication withn the selfhosted community.</p>
 				</div>
 			</div>
 			<div class="ui divider"></div>
