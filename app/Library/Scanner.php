@@ -2,7 +2,9 @@
 
 namespace App\Library;
 
+use App\Models\Header;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class Scanner
 {
@@ -11,13 +13,7 @@ class Scanner
     protected $grokPatterns;
     protected $maxAge;
 
-    protected $headers = [];
-    protected $subheaders = [];
-    protected $descriptions = [];
-    protected $validLinks = [];
-    protected $invaldShit = [];
-
-    public function __construct()
+    public function __construct() 
     {
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -48,62 +44,81 @@ class Scanner
         return $this->grokPatterns;
     }
 
-    public function Scan()
-    {
+    public function Scan() {
         $start = strpos($this->file, config('scanner.starttag')) + strlen(config('scanner.starttag'));
         $end = strpos($this->file, config('scanner.endtag')) - strlen(config('scanner.endtag'));
-        if ($start === -1 || $end === -1) {
+        if($start === -1 || $end === -1)
+        {
             return false;
         }
         $end = $end - $start;
         $lines = explode("\n", substr($this->file, $start, $end));
-        $lastItem;
-        foreach ($lines as $line) {
-            if (substr($line, 0, 3) == '## ') {
-                array_push($this->headers, substr($line, 3));
-                $lastItem = 'h';
-            } elseif (substr($line, 0, 4) == '### ') {
-                array_push($this->subheaders, substr($line, 4));
-                $lastItem = 's';
-            } elseif (substr($line, 0, 4) == '  * ') {
-                $grokResult = $this->grok->parse($this->grokPatterns['items'], substr($line, 4));
-                if ($grokResult === false) {
-                    array_push($this->invaldShit, substr($line, 4));
-                    $lastItem = 'i';
-                } else {
-                    array_push($this->validLinks, $grokResult);
-                    $lastItem = 'l';
+        $lastHeaderId = 0;
+        $lastHeaderLevel = 2;
+        $headers = new Collection();
+        foreach($lines as $line)
+        {
+            if(substr($line, 0, 2) == "##")
+            {
+                $headerText = substr($line, strpos($line, '# ') + 2);
+                $headerLevel = strpos($line, '# ') + 1;
+                if($headerLevel == 2)
+                {
+                	$headerParent = 0;
                 }
-            } else {
-                if ($line != '') {
-                    if ($lastItem == 'h' || $lastItem == 's') {
-                        array_push($this->descriptions, $line);
-                    } else {
-                        array_push($this->invaldShit, $line);
-                    }
+                else if($headerLevel == $lastHeaderLevel)
+                {
+                	$headerParent == Header::find($lastHeaderId)->header_parent;
+                }
+                else if($headerLevel > $lastHeaderLevel)
+                {
+                	$headerParent = $lastHeaderId;
+                }
+                else
+                {
+                	dd($headers->last(function($k, $v) { return $v['header_level'] == $headerLevel; }));
+                	$headerParent = $headers->where('header_level', '=', $headerLevel)->last()->header_parent;
+                }
+                $header = Header::where('header_text', '=', $headerText)->first();
+                if(!$header)
+                {
+                	$header = Header::create(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                	$lastHeaderId = $header->header_id;
+                	$lastHeaderLevel = $header->header_level;
+                	$headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                }
+                else
+                {
+                	if($header->header_level != $headerLevel || $header->header_parent != $headerParent)
+                	{
+                		$header->header_level = $headerLevel;
+                		$header->header_parent = $headerParent;
+                		$header->save();
+	                	$lastHeaderId = $header->header_id;
+	                	$lastHeaderLevel = $header->header_level;
+                		$headers->push(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+                	}
                 }
             }
         }
-
         return true;
     }
 
-    public function GetResults()
-    {
+    public function GetResults() {
         return [
             'stats' => [
-                'headers'      => count($this->headers),
-                'subheaders'   => count($this->subheaders),
-                'descriptions' => count($this->descriptions),
-                'validLinks'   => count($this->validLinks),
-                'invalidShit'  => count($this->invaldShit),
+                'headers' => count(Header::MainHeaders()),
+                'subheaders' => count(Header::where('header_parent', '!=', 0)->orderBy('header_text', 'ASC')->get()),
+                'descriptions' => '',
+                'validLinks' => '',
+                'invalidShit' => '',
             ],
             'data' => [
-                'headers'      => $this->headers,
-                'subheaders'   => $this->subheaders,
-                'descriptions' => $this->descriptions,
-                'validLinks'   => $this->validLinks,
-                'invalidShit'  => $this->invaldShit,
+                'headers' => Header::MainHeaders(),
+                'subheaders' => Header::where('header_parent', '!=', 0)->orderBy('header_text', 'ASC')->get(),
+                'descriptions' => '',
+                'validLinks' => '',
+                'invalidShit' => '',
             ],
         ];
     }
