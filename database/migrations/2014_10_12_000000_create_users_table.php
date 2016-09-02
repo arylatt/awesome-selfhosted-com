@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('user');
             $table->string('user_name');
             $table->string('user_email');
+            $table->string('user_bio')->default('User has not written a bio.');
             $table->string('github_accesstoken');
             $table->text('github_url');
             $table->boolean('user_collab')->default(false);
