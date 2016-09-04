@@ -63,6 +63,6 @@ class User extends Authenticatable
 
     public function StaffBio()
     {
-        return '<em>User has not written a bio.</em>';
+        return $this->user_bio;
     }
 }
