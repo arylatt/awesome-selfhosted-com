@@ -23,6 +23,10 @@ class CollabController extends Controller
 
     public function Profile(Request $req)
     {
-        return view('mgmt.profile', ['title' => 'Profile']);
+        if($req->getMethod() == "GET") {
+            return view('mgmt.profile', ['title' => 'Profile']);
+        } else if($req->getMethod() == "POST") {
+            die($req);
+        }
     }
 }

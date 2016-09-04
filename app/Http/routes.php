@@ -20,6 +20,7 @@ Route::get('team', 'FrontendController@Team');
 Route::group(['prefix' => 'mgmt'], function () {
     Route::get('/', 'CollabController@Index');
     Route::get('profile', 'CollabController@Profile');
+    Route::post('profile', 'CollabController@Profile');
 });
 
 Route::group(['prefix' => 'admin'], function () {
