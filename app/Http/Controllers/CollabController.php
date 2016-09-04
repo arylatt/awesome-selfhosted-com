@@ -25,5 +25,4 @@ class CollabController extends Controller
     {
         return view('mgmt.profile', ['title' => 'Profile']);
     }
-
 }
