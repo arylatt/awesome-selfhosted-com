@@ -25,6 +25,7 @@ class User extends Authenticatable
             $u->user = $userInfo->login;
             $u->user_name = (isset($userInfo->name) ? $userInfo->name : $userInfo->login);
             $u->user_email = (isset($userInfo->email) ? $userInfo->email : $u->user.'@users.noreply.github.com');
+            $u->user_bio = (isset($userInfo->bio) ? $userInfo->bio : 'This user has not set a description yet...'); //might need to be removed, as it might only need to run on original creation
             $u->github_url = $userInfo->html_url;
             $u->github_accesstoken = $access_token;
             $u->save();
@@ -35,6 +36,7 @@ class User extends Authenticatable
                 'user'               => $userInfo->login,
                 'user_name'          => (isset($userInfo->name) ? $userInfo->name : $userInfo->login),
                 'user_email'         => (isset($userInfo->email) ? $userInfo->email : $u->user.'@users.noreply.github.com'),
+                'user_bio'           => (isset($userInfo->bio) ? $userInfo->bio : 'This user has not set a description yet...'),
                 'github_url'         => $userInfo->html_url,
                 'github_accesstoken' => $access_token,
             ]);

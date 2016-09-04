@@ -15,6 +15,10 @@
 			<i class="flag icon"></i>
 			Exceptions
 		</a>
+		<a href="/mgmt/profile" class="item">
+			<i class="user icon"></i>
+			Profile
+		</a>
 		<div class="right menu">
 			<div class="ui dropdown item">
 				{{ Auth::user()->user_name }}
