@@ -20,4 +20,10 @@ class CollabController extends Controller
     {
         return view('mgmt.index', ['title' => 'Dashboard']);
     }
+
+    public function Profile(Request $req)
+    {
+        return view('mgmt.profile', ['title' => 'Profile']);
+    }
+
 }

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     public $primaryKey = 'user_id';
-    protected $fillable = ['user_id', 'user', 'user_name', 'user_email', 'github_url', 'github_accesstoken', 'user_collab', 'user_admin'];
+    protected $fillable = ['user_id', 'user', 'user_name', 'user_email', 'user_bio', 'github_url', 'github_accesstoken', 'user_collab', 'user_admin'];
     protected $hidden = ['remember_token'];
 
     public static function AuthByAccessToken($access_token)
