@@ -16,7 +16,7 @@ class Scanner
     protected $lastHeaderId;
     protected $lastHeaderLevel;
     protected $lastLineHeader = false;
-    protected $descriptions = [];
+    protected $descriptions;
     protected $validLinks;
     protected $invalidItems;
 
@@ -65,18 +65,17 @@ class Scanner
         $this->headers = new Collection();
         $this->validLinks = new Collection();
         $this->invalidItems = new Collection();
+        $this->descriptions = new Collection();
         foreach ($lines as $line) {
             if (substr($line, 0, 2) == '##') {
                 $this->ParseHeader($line);
-            } else if(preg_match('/ *\* *\[/', $line)) {
+            } else if(preg_match('/ *\*[^\*] *\[/', $line)) {
                 $this->ParseItem($line);
             } else if(strlen($line) && $this->lastLineHeader) {
                 $this->ParseDescription($line);
             }
         }
         $this->Cleanup();
-
-        return true;
     }
 
     public function GetResults()
@@ -131,6 +130,7 @@ class Scanner
 
     protected function ParseItem($line)
     {
+        $this->lastLineHeader = false;
         $item = $this->grok->parse($this->grokPatterns['items'], $line);
         if($item) {
             $sc = '';
@@ -155,7 +155,8 @@ class Scanner
 
     protected function ParseDescription($line)
     {
-        return true;
+        $this->lastLineHeader = false;
+        $this->descriptions->push(['desc' => $line, 'header_id' => $this->lastHeaderId]);
     }
 
     protected function Cleanup()
