@@ -69,7 +69,7 @@ class Scanner
         foreach ($lines as $line) {
             if (substr($line, 0, 2) == '##') {
                 $this->ParseHeader($line);
-            } else if(preg_match('/ *\*[^\*] *\[/', $line)) {
+            } elseif (preg_match('/ *\*[^\*] *\[/', $line)) {
                 $this->ParseItem($line);
             } elseif (strlen($line) && $this->lastLineHeader) {
                 $this->ParseDescription($line);
