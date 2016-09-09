@@ -71,7 +71,7 @@ class Scanner
                 $this->ParseHeader($line);
             } else if(preg_match('/ *\*[^\*] *\[/', $line)) {
                 $this->ParseItem($line);
-            } else if(strlen($line) && $this->lastLineHeader) {
+            } elseif (strlen($line) && $this->lastLineHeader) {
                 $this->ParseDescription($line);
             }
         }
@@ -132,22 +132,24 @@ class Scanner
     {
         $this->lastLineHeader = false;
         $item = $this->grok->parse($this->grokPatterns['items'], $line);
-        if($item) {
+        if ($item) {
             $sc = '';
             $d = '';
-            if($item['l2_t'] != "") {
-                if($item['l1_t'] != 'Demo' || $item['l2_t'] != 'Source Code') {
+            if ($item['l2_t'] != '') {
+                if ($item['l1_t'] != 'Demo' || $item['l2_t'] != 'Source Code') {
                     $this->invalidItems->push($line);
+
                     return;
                 }
                 $sc = $item['l2_u'];
             }
-            if($item['l1_t'] == 'Source Code') {
+            if ($item['l1_t'] == 'Source Code') {
                 $sc = $item['l1_u'];
-            } else if($item['l1_t'] == 'Demo') {
+            } elseif ($item['l1_t'] == 'Demo') {
                 $d = $item['l1_u'];
             }
             $this->validLinks->push(['name' => $item['name'], 'url' => $item['url'], 'desc' => $item['desc'], 'source' => $sc, 'demo' => $d, 'lic' => $item['license'], 'lang' => $item['language'], 'prop' => (strlen($item['prop']) ? true : false)]);
+
             return;
         }
         $this->invalidItems->push($line);
@@ -161,10 +163,8 @@ class Scanner
 
     protected function Cleanup()
     {
-        foreach(Header::all() as $header)
-        {
-            if(!count($this->headers->where('header_id', $header->header_id)->first()))
-            {
+        foreach (Header::all() as $header) {
+            if (!count($this->headers->where('header_id', $header->header_id)->first())) {
                 $header->delete();
             }
         }
