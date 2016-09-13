@@ -2,8 +2,8 @@
 
 namespace App\Library;
 
-use App\Models\Header;
 use App\Models\Description;
+use App\Models\Header;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -160,11 +160,11 @@ class Scanner
     {
         $this->lastLineHeader = false;
         $desc = Description::where('description_text', '=', $line)->first();
-        if(!$desc) {
-        	$desc = Description::create(['description_text' => $line, 'header_id' => $this->lastHeaderId]);
-        } elseif($desc->header_id != $this->lastHeaderId) {
-        	$desc->header_id = $this->lastHeaderId;
-        	$desc->save();
+        if (!$desc) {
+            $desc = Description::create(['description_text' => $line, 'header_id' => $this->lastHeaderId]);
+        } elseif ($desc->header_id != $this->lastHeaderId) {
+            $desc->header_id = $this->lastHeaderId;
+            $desc->save();
         }
         $this->descriptions->push(['desc_id' => $desc->description_id, 'desc' => $line, 'header_id' => $this->lastHeaderId]);
     }
