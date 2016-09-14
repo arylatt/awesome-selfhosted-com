@@ -17,6 +17,7 @@ class CreateHeadersTable extends Migration
             $table->string('header_text');
             $table->integer('header_level');
             $table->integer('header_parent');
+            $table->integer('scan_id');
             $table->timestamps();
         });
     }

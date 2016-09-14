@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Header extends Model
 {
     public $primaryKey = 'header_id';
-    protected $fillable = ['header_text', 'header_level', 'header_parent'];
+    protected $fillable = ['header_text', 'header_level', 'header_parent', 'scan_id'];
 
     public function SubHeaders()
     {
@@ -24,9 +24,14 @@ class Header extends Model
         return $this->hasOne('App\Model\Description');
     }
 
-    public function Items()
+    public function ListItems()
     {
-        return $this->hasMany('App\Models\Item');
+        return $this->hasMany('App\Models\ListItem');
+    }
+
+    public function Scan()
+    {
+    	return $this->belongsTo('App\Models\Scan');
     }
 
     public static function MainHeaders()

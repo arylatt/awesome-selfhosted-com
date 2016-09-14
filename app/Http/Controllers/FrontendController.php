@@ -93,11 +93,4 @@ class FrontendController extends Controller
 
         return redirect('/');
     }
-
-    public function ScanTest(Request $req) //Debugging code. Remove me
-    {
-        $scanner = new Scanner();
-        $scanner->Scan();
-        dd($scanner->GetResults());
-    }
 }

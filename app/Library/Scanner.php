@@ -4,11 +4,15 @@ namespace App\Library;
 
 use App\Models\Description;
 use App\Models\Header;
+use App\Models\InvalidItem;
+use App\Models\ListItem;
+use App\Models\Scan;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class Scanner
 {
+    protected $scan;
     protected $file;
     protected $grok;
     protected $grokPatterns;
@@ -21,8 +25,9 @@ class Scanner
     protected $validLinks;
     protected $invalidItems;
 
-    public function __construct()
+    public function __construct($scan)
     {
+        $this->scan = $scan;
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => config('scanner.repositoryurl'),
@@ -112,7 +117,7 @@ class Scanner
         }
         $header = Header::where('header_text', '=', $headerText)->first();
         if (!$header) {
-            $header = Header::create(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
+            $header = Header::create(['header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent, 'scan_id' => $this->scan->scan_id]);
             $this->lastHeaderId = $header->header_id;
             $this->lastHeaderLevel = $header->header_level;
             $this->headers->push(['header_id' => $header->header_id, 'header_text' => $headerText, 'header_level' => $headerLevel, 'header_parent' => $headerParent]);
@@ -120,6 +125,7 @@ class Scanner
             if ($header->header_level != $headerLevel || $header->header_parent != $headerParent) {
                 $header->header_level = $headerLevel;
                 $header->header_parent = $headerParent;
+                $header->scan_id = $this->scan->scan_id;
                 $header->save();
             }
             $this->lastHeaderId = $header->header_id;
@@ -139,7 +145,6 @@ class Scanner
             if ($item['l2_t'] != '') {
                 if ($item['l1_t'] != 'Demo' || $item['l2_t'] != 'Source Code') {
                     $this->invalidItems->push($line);
-
                     return;
                 }
                 $sc = $item['l2_u'];
@@ -150,7 +155,6 @@ class Scanner
                 $d = $item['l1_u'];
             }
             $this->validLinks->push(['name' => $item['name'], 'url' => $item['url'], 'desc' => $item['desc'], 'source' => $sc, 'demo' => $d, 'lic' => $item['license'], 'lang' => $item['language'], 'prop' => (strlen($item['prop']) ? true : false)]);
-
             return;
         }
         $this->invalidItems->push($line);
@@ -161,9 +165,10 @@ class Scanner
         $this->lastLineHeader = false;
         $desc = Description::where('description_text', '=', $line)->first();
         if (!$desc) {
-            $desc = Description::create(['description_text' => $line, 'header_id' => $this->lastHeaderId]);
+            $desc = Description::create(['description_text' => $line, 'header_id' => $this->lastHeaderId, 'scan_id' => $this->scan->scan_id]);
         } elseif ($desc->header_id != $this->lastHeaderId) {
             $desc->header_id = $this->lastHeaderId;
+            $desc->scan_id = $this->scan->scan_id;
             $desc->save();
         }
         $this->descriptions->push(['desc_id' => $desc->description_id, 'desc' => $line, 'header_id' => $this->lastHeaderId]);

@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateDescriptionsTable extends Migration
+class CreateInvalidItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateDescriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('descriptions', function (Blueprint $table) {
-            $table->increments('description_id');
-            $table->text('description_text');
-            $table->integer('header_id');
+        Schema::create('invalid_items', function (Blueprint $table) {
+            $table->increments('invalid_item_id');
+            $table->text('invalid_item_text');
+            $table->text('invalid_item_errors');
             $table->integer('scan_id');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateDescriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('descriptions');
+        Schema::drop('invalid_items');
     }
 }
