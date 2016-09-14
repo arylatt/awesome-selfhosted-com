@@ -27,3 +27,5 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('login', 'FrontendController@Login');
 Route::get('logout', 'FrontendController@Logout');
+
+Route::get('scan', 'FrontendController@ScanTest'); //Debugging code. Remove me

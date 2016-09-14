@@ -20,7 +20,7 @@
 						{{ $collab->user }}
 					</div>
 					<div class="description">
-						{!! $collab->StaffBio() !!}
+						<em>{!! $collab->StaffBio() !!}</em>
 					</div>
 				</div>
 				<div class="extra content">
