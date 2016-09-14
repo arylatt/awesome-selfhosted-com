@@ -4,8 +4,6 @@ namespace App\Library;
 
 use App\Models\Description;
 use App\Models\Header;
-use App\Models\InvalidItem;
-use App\Models\ListItem;
 use App\Models\Scan;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -145,6 +143,7 @@ class Scanner
             if ($item['l2_t'] != '') {
                 if ($item['l1_t'] != 'Demo' || $item['l2_t'] != 'Source Code') {
                     $this->invalidItems->push($line);
+
                     return;
                 }
                 $sc = $item['l2_u'];
@@ -155,6 +154,7 @@ class Scanner
                 $d = $item['l1_u'];
             }
             $this->validLinks->push(['name' => $item['name'], 'url' => $item['url'], 'desc' => $item['desc'], 'source' => $sc, 'demo' => $d, 'lic' => $item['license'], 'lang' => $item['language'], 'prop' => (strlen($item['prop']) ? true : false)]);
+
             return;
         }
         $this->invalidItems->push($line);
