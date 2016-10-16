@@ -11,11 +11,11 @@ class ListItem extends Model
 
     public function Scan()
     {
-    	return $this->belongsTo('App\Models\Scan');
+        return $this->belongsTo('App\Models\Scan');
     }
 
     public function Header()
     {
-    	return $this->belongsTo('App\Models\Header');
+        return $this->belongsTo('App\Models\Header');
     }
 }

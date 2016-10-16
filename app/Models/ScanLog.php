@@ -11,6 +11,6 @@ class ScanLog extends Model
 
     public function Scan()
     {
-    	return $this->belongsTo('App\Models\Scan', 'scan_id', 'scan_id');
+        return $this->belongsTo('App\Models\Scan', 'scan_id', 'scan_id');
     }
 }

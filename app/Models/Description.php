@@ -16,6 +16,6 @@ class Description extends Model
 
     public function Scan()
     {
-    	return $this->belongsTo('App\Models\Scan');
+        return $this->belongsTo('App\Models\Scan');
     }
 }

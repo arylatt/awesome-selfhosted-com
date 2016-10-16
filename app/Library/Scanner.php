@@ -131,7 +131,7 @@ class Scanner
                 $header->header_level = $headerLevel;
                 $header->header_parent = $headerParent;
                 $header->scan_id = $this->scan->scan_id;
-            	$this->Log('Header updated (#'.$header->header_id.')');
+                $this->Log('Header updated (#'.$header->header_id.')');
                 $header->save();
             }
             $this->lastHeaderId = $header->header_id;
@@ -151,8 +151,9 @@ class Scanner
             if ($item['l2_t'] != '') {
                 if ($item['l1_t'] != 'Demo' || $item['l2_t'] != 'Source Code') {
                     $i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => 'Syntax error', 'scan_id' => $this->scan->scan_id]);
-        			$this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line]);
-        			$this->Log('Invalid item detected (#'.$i->invalid_item_id.')');
+                    $this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line]);
+                    $this->Log('Invalid item detected (#'.$i->invalid_item_id.')');
+
                     return;
                 }
                 $sc = $item['l2_u'];
@@ -164,38 +165,40 @@ class Scanner
             }
             $invalid = [];
             if (isset($item['url']) && !empty($item['url'])) {
-            	if (($err = $this->URLCheck($item['url'])) !== true) {
-            		array_push($invalid, $err);
-            	}
+                if (($err = $this->URLCheck($item['url'])) !== true) {
+                    array_push($invalid, $err);
+                }
             }
             if (isset($d) && !empty($d)) {
-            	if (($err = $this->URLCheck($d)) !== true) {
-            		array_push($invalid, $err);
-            	}
+                if (($err = $this->URLCheck($d)) !== true) {
+                    array_push($invalid, $err);
+                }
             }
             if (isset($sc) && !empty($sc)) {
-            	if (($err = $this->URLCheck($sc)) !== true) {
-            		array_push($invalid, $err);
-            	}
+                if (($err = $this->URLCheck($sc)) !== true) {
+                    array_push($invalid, $err);
+                }
             }
             $listItem = ListItem::where('list_item_name', '=', $item['name'])->first();
             if (!$listItem) {
-            	if (count($invalid)) {
-            		$i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => implode(', ', $invalid), 'scan_id' => $this->scan->scan_id]);
-            		$this->Log('Invalid item detected (#'.$i->invalid_item_id.')');
-            		$this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line, 'error' => implode(', ', $invalid)]);
-            		return;
-            	}
+                if (count($invalid)) {
+                    $i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => implode(', ', $invalid), 'scan_id' => $this->scan->scan_id]);
+                    $this->Log('Invalid item detected (#'.$i->invalid_item_id.')');
+                    $this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line, 'error' => implode(', ', $invalid)]);
+
+                    return;
+                }
                 $listItem = ListItem::create(['list_item_name' => $item['name'], 'list_item_url' => $item['url'], 'list_item_description' => $item['desc'], 'list_item_sourcecode' => $sc, 'list_item_demo' => $d, 'list_item_license' => $item['license'], 'list_item_language' => $item['language'], 'list_item_proprietary' => (strlen($item['prop']) ? true : false), 'header_id' => $this->lastHeaderId, 'scan_id' => $this->scan->scan_id]);
-            	$this->Log('ListItem created (#'.$listItem->list_item_id.')');
+                $this->Log('ListItem created (#'.$listItem->list_item_id.')');
             } else {
-            	if (count($invalid)) {
-            		$listItem->delete();
-            		$i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => implode(', ', $invalid), 'scan_id' => $this->scan->scan_id]);
-            		$this->Log('Invalid item detected (#'.$i->invalid_item_id.') - Removed from list.');
-            		$this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line, 'error' => implode(', ', $invalid)]);
-            		return;
-            	}
+                if (count($invalid)) {
+                    $listItem->delete();
+                    $i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => implode(', ', $invalid), 'scan_id' => $this->scan->scan_id]);
+                    $this->Log('Invalid item detected (#'.$i->invalid_item_id.') - Removed from list.');
+                    $this->invalidItems->push(['invalid_id' => $i->invalid_item_id, 'line' => $line, 'error' => implode(', ', $invalid)]);
+
+                    return;
+                }
                 if ($listItem->list_item_url != $item['url']) {
                     $listItem->list_item_url = $item['url'];
                     $listItem->scan_id = $this->scan->scan_id;
@@ -229,11 +232,12 @@ class Scanner
                     $listItem->scan_id = $this->scan->scan_id;
                 }
                 if ($listItem->scan_id != $this->scan->scan_id) {
-                	$listItem->save();
-            		$this->Log('ListItem updated (#'.$listItem->list_item_id.')');
+                    $listItem->save();
+                    $this->Log('ListItem updated (#'.$listItem->list_item_id.')');
                 }
             }
             $this->validLinks->push(['item_id' => $listItem->list_item_id, 'name' => $item['name'], 'url' => $item['url'], 'desc' => $item['desc'], 'source' => $sc, 'demo' => $d, 'lic' => $item['license'], 'lang' => $item['language'], 'prop' => (strlen($item['prop']) ? true : false)]);
+
             return;
         }
         $i = InvalidItem::create(['invalid_item_text' => $line, 'invalid_item_error' => 'Syntax error', 'scan_id' => $this->scan->scan_id]);
@@ -270,59 +274,60 @@ class Scanner
             }
         }
         foreach (ListItem::all() as $listItem) {
-        	if (!count($this->validLinks->where('item_id', $listItem->list_item_id)->first())) {
-        		$listItem->delete();
-        	}
+            if (!count($this->validLinks->where('item_id', $listItem->list_item_id)->first())) {
+                $listItem->delete();
+            }
         }
     }
 
     protected function URLCheck($url)
     {
-    	if (preg_match('/http(s)?\:\/\/(www\.)?github\.com\/(?P<user>[A-Za-z0-9-_.]*)\/(?P<repo>[A-Za-z0-9-_.]*)/', $url, $matches)) {
-    		if(empty($matches['user']) || empty($matches['repo'])) {
-    			return 'Not a repo';
-			}
-    		$api = curl_init();
-    		curl_setopt_array($api, [
-    			CURLOPT_URL => 'https://api.github.com/repos/'.$matches['user'].'/'.$matches['repo'].'?client_id='.env('GITHUB_CLIENTID').'&client_secret='.env('GITHUB_SECRET'),
-    			CURLOPT_HTTPHEADER => ['User-Agent: '.env('GITHUB_USERAGENT')],
-    			CURLOPT_RETURNTRANSFER => true,
-    		]);
-    		try {
-	    		$branch = json_decode(curl_exec($api));
-	    		$branch = (isset($branch->default_branch)) ? $branch->default_branch : 'master';
-	    		$api = curl_init();
-	    		curl_setopt_array($api, [
-	    			CURLOPT_URL => 'https://api.github.com/repos/'.$matches['user'].'/'.$matches['repo'].'/branches/'.$branch.'?client_id='.env('GITHUB_CLIENTID').'&client_secret='.env('GITHUB_SECRET'),
-	    			CURLOPT_HTTPHEADER => ['User-Agent: '.env('GITHUB_USERAGENT')],
-	    			CURLOPT_RETURNTRANSFER => true,
-	    		]);
-	    		if (Carbon::parse(json_decode(curl_exec($api))->commit->commit->author->date)->diffInDays() > config('scanner.maintainedthreshold')) {
-	    			return 'Too old';
-	    		}
-	    	} catch (\ErrorException $e) {
-	    		return 'Bad repo';
-	    	}
-    	} else {
-    		$check = curl_init();
-    		curl_setopt_array($check, [
-    			CURLOPT_URL => $url,
-    			CURLOPT_FOLLOWLOCATION => true,
-    			CURLOPT_RETURNTRANSFER => true,
-    		]);
-    		curl_exec($check);
-    		$header = curl_getinfo($check);
+        if (preg_match('/http(s)?\:\/\/(www\.)?github\.com\/(?P<user>[A-Za-z0-9-_.]*)\/(?P<repo>[A-Za-z0-9-_.]*)/', $url, $matches)) {
+            if (empty($matches['user']) || empty($matches['repo'])) {
+                return 'Not a repo';
+            }
+            $api = curl_init();
+            curl_setopt_array($api, [
+                CURLOPT_URL            => 'https://api.github.com/repos/'.$matches['user'].'/'.$matches['repo'].'?client_id='.env('GITHUB_CLIENTID').'&client_secret='.env('GITHUB_SECRET'),
+                CURLOPT_HTTPHEADER     => ['User-Agent: '.env('GITHUB_USERAGENT')],
+                CURLOPT_RETURNTRANSFER => true,
+            ]);
+            try {
+                $branch = json_decode(curl_exec($api));
+                $branch = (isset($branch->default_branch)) ? $branch->default_branch : 'master';
+                $api = curl_init();
+                curl_setopt_array($api, [
+                    CURLOPT_URL            => 'https://api.github.com/repos/'.$matches['user'].'/'.$matches['repo'].'/branches/'.$branch.'?client_id='.env('GITHUB_CLIENTID').'&client_secret='.env('GITHUB_SECRET'),
+                    CURLOPT_HTTPHEADER     => ['User-Agent: '.env('GITHUB_USERAGENT')],
+                    CURLOPT_RETURNTRANSFER => true,
+                ]);
+                if (Carbon::parse(json_decode(curl_exec($api))->commit->commit->author->date)->diffInDays() > config('scanner.maintainedthreshold')) {
+                    return 'Too old';
+                }
+            } catch (\ErrorException $e) {
+                return 'Bad repo';
+            }
+        } else {
+            $check = curl_init();
+            curl_setopt_array($check, [
+                CURLOPT_URL            => $url,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_RETURNTRANSFER => true,
+            ]);
+            curl_exec($check);
+            $header = curl_getinfo($check);
             if ($header['http_code'] == '0') {
                 return $url.' - cURL error: '.curl_error($check);
             } elseif ($header['http_code'] != '200') {
-    			return $url.' - Bad response code: '.$header['http_code'];
-    		}
-    	}
-    	return true;
+                return $url.' - Bad response code: '.$header['http_code'];
+            }
+        }
+
+        return true;
     }
 
     protected function Log($text)
     {
-    	ScanLog::create(['scan_id' => $this->scan->scan_id, 'scan_log_text' => $text]);
+        ScanLog::create(['scan_id' => $this->scan->scan_id, 'scan_log_text' => $text]);
     }
 }
