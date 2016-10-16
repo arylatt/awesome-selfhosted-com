@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$('.ui.dropdown').dropdown();
+	$('.ui.accordion').accordion();
 	$('#awesh_search').search({
 		apiSettings: {
 			url: 'search/{query}',

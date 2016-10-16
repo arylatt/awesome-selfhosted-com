@@ -15,6 +15,11 @@ class Scan extends Model
     const PENDING = 1;
     const SUCCEEDED = 2;
 
+    public function Creator()
+    {
+        return $this->belongsTo('App\Models\User', 'scan_creator', 'user_id');
+    }
+
     public function Headers()
     {
     	return $this->hasMany('App\Models\Header');
@@ -35,7 +40,12 @@ class Scan extends Model
     	return $this->hasMany('App\Models\InvalidItem');
     }
 
-    public static function New($auto = false)
+    public function Log()
+    {
+        return $this->hasMany('App\Models\ScanLog');
+    }
+
+    public static function NewScan($auto = false)
     {
     	if($auto) {
     		$creator = -1;
@@ -43,11 +53,27 @@ class Scan extends Model
     		$creator = auth()->user()->user_id;
     	}
     	$s = self::create([
-    		'scan_start' => Carbon::Now(),
+    		'scan_start' => Carbon::Now()->toDateTimeString(),
     		'scan_creator' => $creator,
     		'scan_status' => self::PENDING,
     	]);
     	$scanner = new Scanner($s);
     	$scanner->Scan();
+        dd($scanner->GetResults());
+    }
+
+    public function FormatStatus()
+    {
+        switch ($this->scan_status) {
+            case 0:
+                return '<td class="negative">Failed</td>';
+                break;
+            case 1:
+                return '<td class="warning">Pending</td>';
+                break;
+            case 2:
+                return '<td class="positive">Succeeded</td>';
+                break;
+        }
     }
 }

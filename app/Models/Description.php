@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Description extends Model
 {
-    public $privateKey = 'description_id';
+    public $primaryKey = 'description_id';
     protected $fillable = ['description_text', 'header_id', 'scan_id'];
 
     public function Header()

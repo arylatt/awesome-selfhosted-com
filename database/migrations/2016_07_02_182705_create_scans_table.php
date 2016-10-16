@@ -14,11 +14,11 @@ class CreateScansTable extends Migration
     {
         Schema::create('scans', function (Blueprint $table) {
             $table->increments('scan_id');
-            $table->timestamp('scan_start');
-            $table->timestamp('scan_end');
-            $table->integer('scan_creator'); //manual and scheduled
-            $table->integer('scan_type'); //free and non-free
-            $table->integer('scan_status'); //pending/progress, failed, success
+            $table->timestamp('scan_start')->nullable();
+            $table->timestamp('scan_end')->nullable();
+            $table->integer('scan_creator');
+            $table->integer('scan_type');
+            $table->integer('scan_status');
             $table->timestamps();
         });
     }

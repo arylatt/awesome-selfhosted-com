@@ -21,7 +21,7 @@ class Header extends Model
 
     public function Description()
     {
-        return $this->hasOne('App\Model\Description');
+        return $this->hasOne('App\Models\Description');
     }
 
     public function ListItems()

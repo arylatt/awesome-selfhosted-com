@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvalidItemsTable extends Migration
+class CreateScanLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateInvalidItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invalid_items', function (Blueprint $table) {
-            $table->increments('invalid_item_id');
-            $table->text('invalid_item_text');
-            $table->text('invalid_item_error');
+        Schema::create('scan_logs', function (Blueprint $table) {
+            $table->increments('scan_log_id');
             $table->integer('scan_id');
+            $table->text('scan_log_text');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateInvalidItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('invalid_items');
+        Schema::drop('scan_logs');
     }
 }

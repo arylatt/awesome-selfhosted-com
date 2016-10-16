@@ -22,6 +22,7 @@ class CreateListItemsTable extends Migration
             $table->integer('list_item_license');
             $table->string('list_item_language');
             $table->integer('list_item_proprietary');
+            $table->integer('header_id');
             $table->integer('scan_id');
             $table->timestamps();
         });

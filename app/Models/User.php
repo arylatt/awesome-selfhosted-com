@@ -17,7 +17,7 @@ class User extends Authenticatable
         curl_setopt_array($get_user, [
             CURLOPT_URL            => 'https://api.github.com/user',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER     => ['Authorization: token '.$access_token, 'Accept: application/json'],
+            CURLOPT_HTTPHEADER     => ['Authorization: token ' . $access_token, 'Accept: application/json'],
             CURLOPT_USERAGENT      => config('github.useragent'),
         ]);
         $userInfo = json_decode(curl_exec($get_user));
@@ -64,5 +64,10 @@ class User extends Authenticatable
     public function StaffBio()
     {
         return $this->user_bio;
+    }
+
+    public function Scans()
+    {
+        return $this->hasMany('App\Models\Scan', 'user_id', 'scan_creator');
     }
 }

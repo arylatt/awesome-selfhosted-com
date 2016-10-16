@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\Scanner;
+use App\Models\Header;
+use App\Models\Scan;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -25,6 +26,23 @@ class FrontendController extends Controller
         $md = $md->parse(file_get_contents('https://raw.githubusercontent.com/kickball/awesome-selfhosted/master/README.md'));
 
         return view('frontend.markdown', ['title' => 'Markdown', 'md' => $md]);
+    }
+
+    public function DisplayYaml(Request $req)
+    {
+        $headers = Header::orderBy('header_text', 'ASC')->get();
+        $yaml = [];
+        if (isset($req->raw)) {
+            foreach ($headers as $header) {
+                $item = [];
+                if ($header->Description != null) {
+                    array_push($item, ['Description' => $header->Description->description_text]);
+                }
+                $yaml[$header->header_text] = $item;
+            }
+            //dd($yaml);
+            return response(yaml_emit($yaml), 200)->header('Content-Type', 'text/plain');
+        }
     }
 
     public function Submit(Request $req)
@@ -92,5 +110,10 @@ class FrontendController extends Controller
         Auth::logout();
 
         return redirect('/');
+    }
+
+    public function ScanTest(Request $req)
+    {
+        dd(Scan::NewScan());
     }
 }

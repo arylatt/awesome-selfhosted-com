@@ -13,12 +13,14 @@ Route::get('/', 'FrontendController@Index');
 Route::group(['prefix' => 'view'], function () {
     Route::get('/', 'FrontendController@View');
     Route::get('markdown', 'FrontendController@DisplayMarkdown');
+    Route::get('yaml', 'FrontendController@DisplayYaml');
 });
 Route::get('submit', 'FrontendController@Submit');
 Route::get('team', 'FrontendController@Team');
 
 Route::group(['prefix' => 'mgmt'], function () {
     Route::get('/', 'CollabController@Index');
+    Route::get('results/{id}', 'CollabController@ViewResults');
 });
 
 Route::group(['prefix' => 'admin'], function () {
