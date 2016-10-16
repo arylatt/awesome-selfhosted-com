@@ -31,7 +31,7 @@ class Header extends Model
 
     public function Scan()
     {
-    	return $this->belongsTo('App\Models\Scan');
+        return $this->belongsTo('App\Models\Scan');
     }
 
     public static function MainHeaders()

@@ -22,22 +22,22 @@ class Scan extends Model
 
     public function Headers()
     {
-    	return $this->hasMany('App\Models\Header');
+        return $this->hasMany('App\Models\Header');
     }
 
     public function Descriptions()
     {
-    	return $this->hasMany('App\Models\Description');
+        return $this->hasMany('App\Models\Description');
     }
 
     public function ListItems()
     {
-    	return $this->hasMany('App\Models\ListItem');
+        return $this->hasMany('App\Models\ListItem');
     }
 
     public function InvalidItems()
     {
-    	return $this->hasMany('App\Models\InvalidItem');
+        return $this->hasMany('App\Models\InvalidItem');
     }
 
     public function Log()
@@ -47,18 +47,18 @@ class Scan extends Model
 
     public static function NewScan($auto = false)
     {
-    	if($auto) {
-    		$creator = -1;
-    	} else {
-    		$creator = auth()->user()->user_id;
-    	}
-    	$s = self::create([
-    		'scan_start' => Carbon::Now()->toDateTimeString(),
-    		'scan_creator' => $creator,
-    		'scan_status' => self::PENDING,
-    	]);
-    	$scanner = new Scanner($s);
-    	$scanner->Scan();
+        if ($auto) {
+            $creator = -1;
+        } else {
+            $creator = auth()->user()->user_id;
+        }
+        $s = self::create([
+            'scan_start'   => Carbon::Now()->toDateTimeString(),
+            'scan_creator' => $creator,
+            'scan_status'  => self::PENDING,
+        ]);
+        $scanner = new Scanner($s);
+        $scanner->Scan();
         dd($scanner->GetResults());
     }
 
