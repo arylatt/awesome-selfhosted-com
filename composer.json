@@ -9,7 +9,10 @@
         "laravel/framework": "5.2.*",
         "semantic/ui": "^2.2",
         "components/jquery": "^3.0",
-        "cebe/markdown": "^1.1"
+        "cebe/markdown": "^1.1",
+        "m1guelpf/github": "dev-master",
+        "m1guelpf/github-api": "dev-packagist",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
